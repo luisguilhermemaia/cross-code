@@ -14,7 +14,8 @@ const elementosHtml = {
     botaoSalvar: document.getElementById('salvar'),
     listaDeContatosUl: document.getElementById('listaDeContatos'),
     formularioContatos: document.getElementById("formContato"),
-    formularioBusca: document.getElementById("formBusca")
+    formularioBusca: document.getElementById("formBusca"),
+    buscaInput: document.getElementById("busca")
 };
 
 const handlers = {
@@ -38,11 +39,11 @@ const handlers = {
         elementosHtml.addTelefoneInput.value = '';
         elementosHtml.addEmailInput.value = '';
 
-        view.displayContatos();
+        view.displayContatos(listaDeContatos);
     },
     deleteContato: function (id) {
         listaDeContatos.splice(id, 1);
-        view.displayContatos();
+        view.displayContatos(listaDeContatos);
     },
     updateContato: function (id) {
         const contato = listaDeContatos[id];
@@ -59,11 +60,11 @@ const handlers = {
 };
 
 const view = {
-    displayContatos: function () {
+    displayContatos: function (lista) {
         elementosHtml.listaDeContatosUl.className = 'list-group';
         elementosHtml.listaDeContatosUl.innerHTML = '';
 
-        listaDeContatos.forEach(function (contato, index) {
+        lista.forEach(function (contato, index) {
             const li = document.createElement('li');
             li.className = 'list-group-item d-flex w-100 justify-content-between';
             li.textContent = contato.nome + ' / ' + contato.email + ' / ' + contato.telefone;
@@ -108,10 +109,9 @@ const view = {
             },
             false);
 
-        elementosHtml.formularioBusca.addEventListener("submit",
+        elementosHtml.buscaInput.addEventListener("input",
             function (event) {
-                event.preventDefault();
-                handlers.buscaContato();
+                view.displayContatos(listaDeContatos.filter((contato) => contato.nome.includes(event.target.value)));
             },
             false);
     }
@@ -123,4 +123,4 @@ listaDeContatos.push(new Contato('tcvbcvbu', '39482394823', '23532@gds.com'));
 listaDeContatos.push(new Contato('twetu', '394824823', 'fgadfg@gds.com'));
 
 view.setUpEventListeners();
-view.displayContatos();
+view.displayContatos(listaDeContatos);
