@@ -7,16 +7,14 @@ const Contato = function (nome, telefone, email) {
 
 const listaDeContatos = [];
 
-listaDeContatos.push(new Contato('Eu', '39482394823', 'asfasf@gds.com'));
-listaDeContatos.push(new Contato('tretu', '394823823', 'fsdf@gds.com'));
-listaDeContatos.push(new Contato('tcvbcvbu', '39482394823', '23532@gds.com'));
-listaDeContatos.push(new Contato('twetu', '394824823', 'fgadfg@gds.com'));
-
 const elementosHtml = {
     addNomeInput: document.getElementById('nome'),
     addTelefoneInput: document.getElementById('telefone'),
     addEmailInput: document.getElementById('email'),
-    botaoSalvar: document.getElementById('salvar')
+    botaoSalvar: document.getElementById('salvar'),
+    listaDeContatosUl: document.getElementById('listaDeContatos'),
+    formularioContatos: document.getElementById("formContato"),
+    formularioBusca: document.getElementById("formBusca")
 };
 
 const handlers = {
@@ -31,7 +29,7 @@ const handlers = {
             listaDeContatos.push(contato);
 
         } else if (elementosHtml.botaoSalvar.innerHTML == 'Editar') {
-            var id = elementosHtml.addNomeInput.getAttribute("idContato");
+            const id = elementosHtml.addNomeInput.getAttribute("idContato");
             listaDeContatos[id] = contato;
             elementosHtml.botaoSalvar.innerHTML = 'Salvar';
         }
@@ -54,7 +52,7 @@ const handlers = {
         elementosHtml.addEmailInput.value = contato.email;
         elementosHtml.botaoSalvar.innerHTML = 'Editar';
 
-        const idContato = document.createAttribute("idContato");        
+        const idContato = document.createAttribute("idContato");
         idContato.value = '' + id;
         elementosHtml.addNomeInput.setAttributeNode(idContato);
     }
@@ -62,9 +60,8 @@ const handlers = {
 
 const view = {
     displayContatos: function () {
-        const contatosUl = document.getElementById('listaDeContatos');
-        contatosUl.className = 'list-group';
-        contatosUl.innerHTML = '';
+        elementosHtml.listaDeContatosUl.className = 'list-group';
+        elementosHtml.listaDeContatosUl.innerHTML = '';
 
         listaDeContatos.forEach(function (contato, index) {
             const li = document.createElement('li');
@@ -74,7 +71,7 @@ const view = {
             li.appendChild(this.createEditButton());
             li.appendChild(this.createDeleteButton());
 
-            contatosUl.appendChild(li);
+            elementosHtml.listaDeContatosUl.appendChild(li);
         }, this);
     },
     createDeleteButton: function () {
@@ -90,38 +87,40 @@ const view = {
         return editButton;
     },
     setUpEventListeners: function () {
-        const contatosUl = document.getElementById('listaDeContatos');
-
-        contatosUl.addEventListener('click', function (event) {
+        elementosHtml.listaDeContatosUl.addEventListener('click', function (event) {
             const clickedElement = event.target;
-            if (clickedElement.className == 'btn btn-warning') {
+            if (clickedElement.innerHTML == 'Editar') {
                 handlers.updateContato(clickedElement.parentNode.id);
             }
         });
 
-        contatosUl.addEventListener('click', function (event) {
+        elementosHtml.listaDeContatosUl.addEventListener('click', function (event) {
             const clickedElement = event.target;
-            if (clickedElement.className == 'btn btn-danger') {
+            if (clickedElement.innerHTML == 'Excluir') {
                 handlers.deleteContato(clickedElement.parentNode.id);
             }
         });
 
-        document.getElementById("formContato").addEventListener("submit",
+        elementosHtml.formularioContatos.addEventListener("submit",
             function (event) {
                 event.preventDefault();
                 handlers.adicionaContato();
             },
             false);
+
+        elementosHtml.formularioBusca.addEventListener("submit",
+            function (event) {
+                event.preventDefault();
+                handlers.buscaContato();
+            },
+            false);
     }
 };
 
+listaDeContatos.push(new Contato('Eu', '39482394823', 'asfasf@gds.com'));
+listaDeContatos.push(new Contato('tretu', '394823823', 'fsdf@gds.com'));
+listaDeContatos.push(new Contato('tcvbcvbu', '39482394823', '23532@gds.com'));
+listaDeContatos.push(new Contato('twetu', '394824823', 'fgadfg@gds.com'));
+
 view.setUpEventListeners();
 view.displayContatos();
-
-
-
-
-
-
-
-
