@@ -131,10 +131,10 @@ const view = {
     }
 };
 
-listaDeContatos.push(new Contato('Eu', '39482394823', 'asfasf@gds.com'));
-listaDeContatos.push(new Contato('tretu', '394823823', 'fsdf@gds.com'));
-listaDeContatos.push(new Contato('tcvbcvbu', '39482394823', '23532@gds.com'));
-listaDeContatos.push(new Contato('twetu', '394824823', 'fgadfg@gds.com'));
+listaDeContatos.push(new Contato('luis', '11111111', 'luis@gmail.com'));
+listaDeContatos.push(new Contato('fabio', '22222222', 'fabiofsdf@gmail.com'));
+listaDeContatos.push(new Contato('rafael', '3333333', 'rafael@gmail.com'));
+listaDeContatos.push(new Contato('carlos', '444444444', 'carlos@gmail.com'));
 
 view.setUpEventListeners();
 view.displayContatos(listaDeContatos);
