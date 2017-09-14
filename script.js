@@ -1,5 +1,4 @@
 const Contato = function (nome, telefone, email) {
-    this.id = null;
     this.nome = nome;
     this.telefone = telefone;
     this.email = email;
@@ -12,10 +11,10 @@ const elementosHtml = {
     addTelefoneInput: document.getElementById('telefone'),
     addEmailInput: document.getElementById('email'),
     botaoSalvar: document.getElementById('salvar'),
-    listaDeContatosUl: document.getElementById('listaDeContatos'),
+    listaDeContatosTable: document.getElementById('listaDeContatos'),
     formularioContatos: document.getElementById("formContato"),
     formularioBusca: document.getElementById("formBusca"),
-    buscaInput: document.getElementById("busca")
+    buscaInput: document.getElementById("busca"),
 };
 
 const handlers = {
@@ -30,7 +29,7 @@ const handlers = {
             listaDeContatos.push(contato);
 
         } else if (elementosHtml.botaoSalvar.innerHTML == 'Editar') {
-            const id = elementosHtml.addNomeInput.getAttribute("idContato");
+            const id = elementosHtml.addNomeInput.getAttribute('idContato');
             listaDeContatos[id] = contato;
             elementosHtml.botaoSalvar.innerHTML = 'Salvar';
         }
@@ -53,7 +52,7 @@ const handlers = {
         elementosHtml.addEmailInput.value = contato.email;
         elementosHtml.botaoSalvar.innerHTML = 'Editar';
 
-        const idContato = document.createAttribute("idContato");
+        const idContato = document.createAttribute('idContato');
         idContato.value = '' + id;
         elementosHtml.addNomeInput.setAttributeNode(idContato);
     }
@@ -61,18 +60,31 @@ const handlers = {
 
 const view = {
     displayContatos: function (lista) {
-        elementosHtml.listaDeContatosUl.className = 'list-group';
-        elementosHtml.listaDeContatosUl.innerHTML = '';
+        elementosHtml.listaDeContatosTable.innerHTML = '';
 
         lista.forEach(function (contato, index) {
-            const li = document.createElement('li');
-            li.className = 'list-group-item d-flex w-100 justify-content-between';
-            li.textContent = contato.nome + ' / ' + contato.email + ' / ' + contato.telefone;
-            li.id = index;
-            li.appendChild(this.createEditButton());
-            li.appendChild(this.createDeleteButton());
+            const tr = document.createElement('tr');
+            tr.id = index;
 
-            elementosHtml.listaDeContatosUl.appendChild(li);
+            const thIndex = document.createElement('th');
+            thIndex.innerHTML = index;
+            tr.appendChild(thIndex);
+
+            Object.values(contato).forEach(function (value) {
+                const th = document.createElement('th');
+                th.textContent = value;
+                tr.appendChild(th);
+            });
+
+            var thEdit = document.createElement('th');
+            var thDelete = document.createElement('th');
+            thEdit.appendChild(this.createEditButton());
+            thDelete.appendChild(this.createDeleteButton());
+
+            tr.appendChild(thEdit);
+            tr.appendChild(thDelete);
+
+            elementosHtml.listaDeContatosTable.appendChild(tr);
         }, this);
     },
     createDeleteButton: function () {
@@ -88,30 +100,32 @@ const view = {
         return editButton;
     },
     setUpEventListeners: function () {
-        elementosHtml.listaDeContatosUl.addEventListener('click', function (event) {
+        elementosHtml.listaDeContatosTable.addEventListener('click', function (event) {
             const clickedElement = event.target;
             if (clickedElement.innerHTML == 'Editar') {
-                handlers.updateContato(clickedElement.parentNode.id);
+                handlers.updateContato(clickedElement.parentNode.parentNode.id);
             }
         });
 
-        elementosHtml.listaDeContatosUl.addEventListener('click', function (event) {
+        elementosHtml.listaDeContatosTable.addEventListener('click', function (event) {
             const clickedElement = event.target;
             if (clickedElement.innerHTML == 'Excluir') {
                 handlers.deleteContato(clickedElement.parentNode.id);
             }
         });
 
-        elementosHtml.formularioContatos.addEventListener("submit",
+        elementosHtml.formularioContatos.addEventListener('submit',
             function (event) {
                 event.preventDefault();
                 handlers.adicionaContato();
             },
             false);
 
-        elementosHtml.buscaInput.addEventListener("input",
+        elementosHtml.buscaInput.addEventListener('input',
             function (event) {
-                view.displayContatos(listaDeContatos.filter((contato) => contato.nome.includes(event.target.value)));
+                const filtro = event.target.nextElementSibling.value;
+                console.log(filtro);
+                view.displayContatos(listaDeContatos.filter((contato) => contato[filtro].includes(event.target.value)));
             },
             false);
     }

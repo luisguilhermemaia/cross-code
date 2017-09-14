@@ -32,28 +32,21 @@
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">Agenda</a>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
-            </div>
-          </li>
-          <li>
-            <form id="formBusca" class="form-inline mx-2 my-auto d-inline w-100">
-              <input id="busca" class="form-control mr-sm-4" type="text" placeholder="Buscar contato">
-              <button id="buscar" class="btn btn-outline-success my-2 my-sm-0" type="submit">Busca</button>
-            </form>
-          </li>
-        </ul>
-      </div>
+    <a class="navbar-brand" href="#">Agenda</a>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <form id="formBusca" class="form-inline mx-2 my-auto d-inline w-100">
+            <input id="busca" class="form-control" type="text" placeholder="Buscar contato por">
+            <select class="form-control" id="filtro">
+              <option>nome</option>
+              <option>telefone</option>
+              <option>email</option>
+            </select>
+            <button id="buscar" class="btn btn-outline-success my-2 my-sm-0" type="submit">Busca</button>
+          </form>
+        </li>
+      </ul>
     </div>
   </nav>
 
@@ -79,7 +72,20 @@
     <div class="w-100"></div>
     <div class="row mt-5">
       <div class="col-lg-12 text-left">
-        <ul id="listaDeContatos"></ul>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Telefone</th>
+              <th>Email</th>
+              <th>--</th>
+              <th>--</th>
+            </tr>
+          </thead>
+          <tbody id="listaDeContatos">
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
