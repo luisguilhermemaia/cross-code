@@ -1,23 +1,14 @@
-var number = 10;
-var count = 10;
-var x = 0;
-while (x < number) {
-    imprimeLinha(x, count);
-    x++;
-    count--;
+var towerSize = 10;
+
+for (var count = 0; count < towerSize; count++) {
+    printLine(count, towerSize);
 }
 
-function imprimeLinha(n, count) {
-    n = n + 1;
-    var numero = (n * 2) - 1;
-    var str1 = '';
+function printLine(count, towerCenter) {
+    var blankSpaceQt = towerCenter - (count);
+    var hashtagQt = (count * 2) + 1;
+    var result = ' '.repeat(blankSpaceQt);
+    result += '#'.repeat(hashtagQt);
 
-    for (var j = 0; j < count; j++) {
-        str1 = ' ' + str1;
-    }
-
-    for (var i = 0; i < numero; i++) {
-        str1 = str1.concat('#');
-    }
-    console.log(str1);
+    console.log(result);
 }

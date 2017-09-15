@@ -25,7 +25,7 @@ const handlers = {
             elementosHtml.addEmailInput.value
         );
 
-        if (elementosHtml.botaoSalvar.innerHTML == 'Salvar') {
+        if (elementosHtml.botaoSalvar.innerHTML === 'Salvar') {
             listaDeContatos.push(contato);
 
         } else if (elementosHtml.botaoSalvar.innerHTML == 'Editar') {
@@ -124,7 +124,6 @@ const view = {
         elementosHtml.buscaInput.addEventListener('input',
             function (event) {
                 const filtro = event.target.nextElementSibling.value;
-                console.log(filtro);
                 view.displayContatos(listaDeContatos.filter((contato) => contato[filtro].includes(event.target.value)));
             },
             false);

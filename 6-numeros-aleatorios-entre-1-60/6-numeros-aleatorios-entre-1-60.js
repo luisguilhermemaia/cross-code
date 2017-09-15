@@ -1,13 +1,18 @@
-var array = [];
+var array = new Set();
 
-while (array.length < 6) {
-    var temp = randomNumberBetween1and60();
+while (array.size < 6) {
+    array.add(randomNumberBetween1and60());
+}
+
+console.log(array);
+
+function verificaSeONumeroExiste(array) {
     for (var index = 0; index < array.length; index++) {
         if (array[index] == temp) {
-            break;  
+            return false;
         }
     }
-    array.push(temp);
+    return true;
 }
 
 function randomNumberBetween1and60() {
